@@ -505,7 +505,7 @@ __weak int sensor_shutdown(int enable)
         }
     }
 
-    mp_hal_delay_ms(10);
+    mp_hal_delay_ms(1);
 
     return ret;
 }
@@ -582,7 +582,7 @@ __weak int sensor_set_pixformat(pixformat_t pixformat)
         return SENSOR_ERROR_CTL_FAILED;
     }
 
-    mp_hal_delay_ms(10); // wait for the camera to settle
+    mp_hal_delay_ms(1); // wait for the camera to settle
 
     // Set pixel format
     sensor.pixformat = pixformat;
@@ -619,7 +619,7 @@ __weak int sensor_set_framesize(framesize_t framesize)
         return SENSOR_ERROR_CTL_FAILED;
     }
 
-    mp_hal_delay_ms(10); // wait for the camera to settle
+    mp_hal_delay_ms(1); // wait for the camera to settle
 
     // Set framebuffer size
     sensor.framesize = framesize;
@@ -947,7 +947,7 @@ __weak int sensor_set_hmirror(int enable)
     sensor.hmirror = enable;
 
     // Wait for the camera to settle
-    mp_hal_delay_ms(100);
+    mp_hal_delay_ms(1);
 
     return 0;
 }
@@ -981,7 +981,7 @@ __weak int sensor_set_vflip(int enable)
     sensor.vflip = enable;
 
     // Wait for the camera to settle
-    mp_hal_delay_ms(100);
+    mp_hal_delay_ms(1);
 
     return 0;
 }
