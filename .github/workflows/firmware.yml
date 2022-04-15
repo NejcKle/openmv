@@ -138,7 +138,7 @@ jobs:
     - name: '🧹 Delete old release'
       uses: dev-drprasad/delete-tag-and-release@v0.2.0
       with:
-        delete_release: true
+        delete_release: false
         tag_name: development
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -157,7 +157,7 @@ jobs:
       with:
         draft: false
         name: Development Release
-        tag_name: development-${{ env.TIME }} 
+        tag_name: development
         body: |
             **⚠️ This is a development release, and it may be unstable.**
             ${{steps.changelog.outputs.changelog}}
