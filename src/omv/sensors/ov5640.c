@@ -658,7 +658,7 @@ static int reset(sensor_t *sensor)
     ret |= cambus_writeb2(&sensor->bus, sensor->slv_addr, SYSTEM_CTROL0, 0x82);
 
     // Delay 5 ms
-    mp_hal_delay_ms(5);
+    mp_hal_delay_ms(1);
 
     // Write default regsiters
     for (int i = 0; default_regs[i][0]; i++) {
@@ -697,7 +697,10 @@ static int reset(sensor_t *sensor)
     #endif
 
     // Delay 300 ms
-    mp_hal_delay_ms(10);
+    mp_hal_delay_ms(1);
+
+    set_framesize(sensor, sensor->FRAMESIZE_QQVGA);
+    set_pixformat(sensor, sensor->PIXFORMAT_GRAYSCALE);
 
     return ret;
 }
