@@ -144,15 +144,15 @@ __weak int sensor_reset()
     // Hard-reset the sensor
     if (sensor.reset_pol == ACTIVE_HIGH) {
         DCMI_RESET_HIGH();
-        mp_hal_delay_ms(10);
+        mp_hal_delay_ms(1);
         DCMI_RESET_LOW();
     } else {
         DCMI_RESET_LOW();
-        mp_hal_delay_ms(10);
+        mp_hal_delay_ms(1);
         DCMI_RESET_HIGH();
     }
 
-    mp_hal_delay_ms(20);
+    mp_hal_delay_ms(2);
 
     // Re-enable the bus.
     cambus_enable(&sensor.bus, true);
@@ -177,10 +177,10 @@ int sensor_probe_init(uint32_t bus_id, uint32_t bus_speed)
 
     // Do a power cycle
     DCMI_PWDN_HIGH();
-    mp_hal_delay_ms(10);
+    mp_hal_delay_ms(1);
 
     DCMI_PWDN_LOW();
-    mp_hal_delay_ms(10);
+    mp_hal_delay_ms(1);
 
     /* Some sensors have different reset polarities, and we can't know which sensor
        is connected before initializing cambus and probing the sensor, which in turn
@@ -191,14 +191,14 @@ int sensor_probe_init(uint32_t bus_id, uint32_t bus_speed)
 
     // Reset the sensor
     DCMI_RESET_HIGH();
-    mp_hal_delay_ms(10);
+    mp_hal_delay_ms(1);
 
     DCMI_RESET_LOW();
-    mp_hal_delay_ms(10);
+    mp_hal_delay_ms(1);
 
     // Initialize the camera bus.
     cambus_init(&sensor.bus, bus_id, bus_speed);
-    mp_hal_delay_ms(10);
+    mp_hal_delay_ms(1);
 
     // Probe the sensor
     sensor.slv_addr = cambus_scan(&sensor.bus, NULL, 0);
@@ -209,7 +209,7 @@ int sensor_probe_init(uint32_t bus_id, uint32_t bus_speed)
 
         // Pull the sensor out of the reset state.
         DCMI_RESET_HIGH();
-        mp_hal_delay_ms(10);
+        mp_hal_delay_ms(1);
 
         // Probe again to set the slave addr.
         sensor.slv_addr = cambus_scan(&sensor.bus, NULL, 0);
@@ -217,14 +217,14 @@ int sensor_probe_init(uint32_t bus_id, uint32_t bus_speed)
             sensor.pwdn_pol = ACTIVE_LOW;
 
             DCMI_PWDN_HIGH();
-            mp_hal_delay_ms(10);
+            mp_hal_delay_ms(1);
 
             sensor.slv_addr = cambus_scan(&sensor.bus, NULL, 0);
             if (sensor.slv_addr == 0) {
                 sensor.reset_pol = ACTIVE_HIGH;
 
                 DCMI_RESET_LOW();
-                mp_hal_delay_ms(10);
+                mp_hal_delay_ms(1);
 
                 sensor.slv_addr = cambus_scan(&sensor.bus, NULL, 0);
                 #ifndef OMV_ENABLE_NONI2CIS
@@ -582,7 +582,7 @@ __weak int sensor_set_pixformat(pixformat_t pixformat)
         return SENSOR_ERROR_CTL_FAILED;
     }
 
-    mp_hal_delay_ms(100); // wait for the camera to settle
+    mp_hal_delay_ms(10); // wait for the camera to settle
 
     // Set pixel format
     sensor.pixformat = pixformat;
@@ -619,7 +619,7 @@ __weak int sensor_set_framesize(framesize_t framesize)
         return SENSOR_ERROR_CTL_FAILED;
     }
 
-    mp_hal_delay_ms(100); // wait for the camera to settle
+    mp_hal_delay_ms(10); // wait for the camera to settle
 
     // Set framebuffer size
     sensor.framesize = framesize;
