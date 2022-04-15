@@ -699,8 +699,8 @@ static int reset(sensor_t *sensor)
     // Delay 300 ms
     mp_hal_delay_ms(1);
 
-    set_framesize(sensor, sensor->FRAMESIZE_QQVGA);
-    set_pixformat(sensor, sensor->PIXFORMAT_GRAYSCALE);
+    sensor_set_framesize(sensor->FRAMESIZE_QQVGA);
+    sensor_set_pixformat(sensor->PIXFORMAT_GRAYSCALE);
 
     return ret;
 }
