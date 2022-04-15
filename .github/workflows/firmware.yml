@@ -109,10 +109,18 @@ jobs:
     runs-on: ubuntu-20.04
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') == false
     steps:
-    - name: Set Time
+    - name: Get Time
+      id: time
+      uses: nanzm/get-time-action@v1.1
+      with:
+        timeZone: 8
+        format: 'YYYY-MM-DD-HH-mm-ss'
+    - name: Usage
+      env:
+        TIME: "${{ steps.time.outputs.time }}"
       run: |
-        echo "time=$(date + "%Y-%m-%d")" >> $GITHUB_ENV
-      
+        echo $TIME
+          
     - name: '⏳ Checkout repository'
       uses: actions/checkout@v3
       with:
