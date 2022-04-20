@@ -48,6 +48,10 @@ void __attribute__((noreturn)) __stack_chk_fail(void)
 
 int main()
 {
+    // Jump to main app
+    ((void (*)(void))(*((uint32_t*) (MAIN_APP_ADDR+4))))();
+    return 0;
+    
     // Override main app interrupt vector offset (set in system_stm32fxxx.c)
     SCB->VTOR = FLASH_BASE | 0x0;
 
@@ -110,6 +114,4 @@ int main()
     // Disable IRQs
     __disable_irq(); __DSB(); __ISB();
 
-    // Jump to main app
-    ((void (*)(void))(*((uint32_t*) (MAIN_APP_ADDR+4))))();
 }
